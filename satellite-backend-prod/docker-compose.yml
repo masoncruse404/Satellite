@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  satellitebackend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: satellite-backend
+    ports:
+      - "${PORT}:${PORT}"       # Bind host:container port from .env
+    environment:
+      - NODE_ENV=production
+      - PORT=${PORT}            # Ensure container receives PORT env
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: unless-stopped
